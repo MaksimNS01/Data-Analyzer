@@ -44,7 +44,7 @@ pytest test_main.py --cov=main
 
 # Пример использования
 
-```
+```no-highlight
 $ python main.py --files sample_data
 
 +----+----------------+----------+
@@ -140,7 +140,7 @@ pytest test_main.py --cov=main
 
 # Example of usage
 
-```
+```no-highlight
 $ python main.py --files sample_data
 
 +----+----------------+----------+
