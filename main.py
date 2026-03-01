@@ -1,11 +1,10 @@
-# Import
 import sys
 import csv
 import argparse
 from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List
-from tabulate import tabulate
+from tabulate import tabulate # pyright: ignore[reportMissingModuleSource]
 
 from utils.logger import AppLogger
 

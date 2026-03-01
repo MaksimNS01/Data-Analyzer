@@ -9,6 +9,10 @@ __pycache__/
 venv/
 ENV/
 
+# pytest
+.pytest_cache/
+.coverage
+
 # Logging
 *.log
 logs/
