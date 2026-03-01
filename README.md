@@ -6,16 +6,18 @@
 
 ```python
 # Обработка одного файла
-python gdp_report.py -f data.csv
+python gdp_report.py --files data.csv --report average-gdp
 
 # Обработка нескольких файлов
-python gdp_report.py -f data1.csv data2.csv data3.csv
+python gdp_report.py --files data1.csv data2.csv data3.csv --report average-gdp
 
 # Обработка всех CSV в папке
-python gdp_report.py -f ./data_folder/
+python gdp_report.py --files ./data_folder/ --report average-gdp
 
-# Запуск с логированием
-python gdp_report.py -f data.csv --debug
+# Запуск с логированием (в формате "YYYY-MM-DD HH:MM:SS - LEVEL - Message")
+python gdp_report.py --debug --files data.csv --report average-gdp
+# или
+python gdp_report.py --verbose --files data.csv --debug --report average-gdp
 ```
 
 Архитектура проекта позволяет легко добавлять новые отчёты. Для этого необходимо:
@@ -29,6 +31,7 @@ if args.report == "new-report":
 ```
 
 Логирование работает через AppLogger из utils.logger. Для включения используйте флаги --debug или --verbose.
+
 ---
 
 A utility for processing CSV files and calculating average GDP by country. The program reads one or multiple files, extracts data from the first (country) and third (GDP) columns, and displays a sorted table with average values.
@@ -36,16 +39,18 @@ A utility for processing CSV files and calculating average GDP by country. The p
 Usage examples:
 ```python
 # Process single file
-python gdp_report.py -f data.csv
+python gdp_report.py --files data.csv --report average-gdp
 
 # Process multiple files
-python gdp_report.py -f data1.csv data2.csv data3.csv
+python gdp_report.py --files data1.csv data2.csv data3.csv --report average-gdp
 
 # Process all CSVs in folder
-python gdp_report.py -f ./data_folder/
+python gdp_report.py --files ./data_folder/ --report average-gdp
 
 # Run with logging
-python gdp_report.py -f data.csv --debug
+python gdp_report.py --debug --files data.csv --report average-gdp
+# or
+python gdp_report.py --verbose --files data.csv --debug --report average-gdp
 ```
 
 The project architecture allows easy addition of new reports. To add a new report:
