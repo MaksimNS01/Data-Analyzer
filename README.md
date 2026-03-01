@@ -2,6 +2,12 @@
 
 Утилита для обработки CSV-файлов и расчёта среднего ВВП по странам. Программа читает один или несколько файлов, извлекает данные из первого (страна) и третьего (ВВП) столбцов, и выводит отсортированную таблицу со средними значениями.
 
+## Установка
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Команды запуска
 
 ```bash
@@ -97,6 +103,12 @@ $ python main.py --files sample_data
 # Data-Analyzer
 
 A utility for processing CSV files and calculating average GDP by country. The program reads one or multiple files, extracts data from the first (country) and third (GDP) columns, and displays a sorted table with average values.
+
+## Installation
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Launch commands
 
