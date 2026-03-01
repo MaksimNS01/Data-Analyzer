@@ -1,9 +1,11 @@
 # Import
+import sys
 import csv
 import argparse
 from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List
+from tabulate import tabulate
 
 from utils.logger import AppLogger
 
@@ -11,7 +13,8 @@ from utils.logger import AppLogger
 # Logger initialization
 logs_dir = Path(__file__).parent / "logs"
 logs_dir.mkdir(exist_ok=True)
-logger = AppLogger(logs_dir=str(logs_dir), enabled=True)
+log_enabled = "--debug" in sys.argv or "--verbose" in sys.argv
+logger = AppLogger(logs_dir=str(logs_dir), enabled=log_enabled)  # Set to True to enable logging to the console
 
 def get_csv_files(input_path: str) -> list:
     """Checks that all passed paths are existing .csv files
@@ -116,8 +119,30 @@ def calculate_average_gdp_per_country(files: List[Path]) -> Dict[str, float]:
 
     return average_gdp_per_country
 
-def print_result() -> None:
-    pass
+def print_result(average_gdp: Dict[str, float]) -> None:
+    """Print the result as a table format:
+        +----+----------------+----------+
+        |    | country        |      gdp |
+        +====+================+==========+
+        |  1 | Country name   |  value   |
+        +----+----------------+----------+
+
+    Args:
+        average_gdp (Dict[str, float]): Average GDP per country
+    """
+
+    headers = ["country", "gdp"]
+    sorted_average_gdp = sorted(average_gdp.items(), key=lambda x: x[1] , reverse=True)
+    table_data = [[i, country, f"{value:.2f}"] for i, (country, value) in enumerate(sorted_average_gdp, 1)]
+    print(tabulate(
+        table_data,
+        headers=headers,
+        tablefmt="grid",
+        stralign="left",
+        numalign="right",
+        floatfmt=".2f",
+        showindex="False"
+    ))
 
 def main() -> None:
     """Main entry point to a program with support for command line arguments
@@ -142,6 +167,16 @@ def main() -> None:
         default="average-gdp",
         help="set report title"
     )
+    parser.add_argument(
+        "-d", "--debug",
+        action='store_true',
+        help="enable logging"
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action='store_true',
+        help="enable logging"
+    )
 
     args = parser.parse_args()
 
@@ -151,13 +186,7 @@ def main() -> None:
 
     try:
         avg_gdp_per_country = calculate_average_gdp_per_country(csv_files)
-
-        print("-" * 40)
-        for country, avg_gdp in sorted(avg_gdp_per_country.items(), key=lambda x: x[1] , reverse=True):
-            print(f"{country:<30} : {avg_gdp:>10.2f}")
-
-        print(f"\nTotal countries processed: {len(avg_gdp_per_country)}")
-        print(f"Files processed: {len(csv_files)}")
+        print_result(avg_gdp_per_country)
 
     except Exception as e:
         logger.error(f"Error processing files: {e}")
