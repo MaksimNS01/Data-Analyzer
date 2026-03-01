@@ -9,6 +9,7 @@ def main() -> None:
     """
     Main entry point to a program with support for command line arguments
     """
+    # Adding CLI arguments
     parser = argparse.ArgumentParser(
         description="Utility for generating a report from .csv"
     )
@@ -21,7 +22,7 @@ def main() -> None:
     parser.add_argument(
         "-r", "--report",
         type=str,
-        default="report",
+        default="average-gdp",
         help="set report title"
     )
 
@@ -33,11 +34,12 @@ def main() -> None:
     logger = AppLogger(logs_dir=str(logs_dir), enabled=True)
 
     # Opening file
-    with open(args.files, newline='') as f:
-        reader = csv.reader(f)
-        logger.info("Completion of reading CSV")
-        for row in reader:
-            print(row)
+    for file in args.files:
+        with open(file, newline='') as f:
+            reader = csv.reader(f)
+            logger.info("Completion of reading CSV")
+            for row in reader:
+                print(row)
 
 if __name__ == "__main__":
     main()
