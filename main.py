@@ -185,8 +185,9 @@ def main() -> None:
     logger.info(f"Found {len(csv_files)} CSV files")
 
     try:
-        avg_gdp_per_country = calculate_average_gdp_per_country(csv_files)
-        print_result(avg_gdp_per_country)
+        if args.report == "average-gdp":
+            avg_gdp_per_country = calculate_average_gdp_per_country(csv_files)
+            print_result(avg_gdp_per_country)
 
     except Exception as e:
         logger.error(f"Error processing files: {e}")
